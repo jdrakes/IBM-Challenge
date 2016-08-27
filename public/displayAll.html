@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>App Test</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div id='photoHolder'>
+        <img id='testPic' src=""></img>
+    </div>
+    <script>
+    $(document).ready(function() {
+        var defer = $.Deferred();
+        var apiKey = 'a5e95177da353f58113fd60296e1d250';
+        var userId = '24662369@N07';
+
+        defer.then(function(ids) {
+            if (ids != null) {
+                for (id in ids) {
+                    getPhotoUrl(ids[id]);
+                }
+            }
+        });
+    });
+
+
+    function getPhotoUrl(photoId, defer) {
+        $.get('/photos/photo/' + photoId + '/url')
+            .done(function(data) {
+                console.log(data);
+                $('#photoHolder').append('<img src="' + data + '">');
+                return data;
+            })
+            .fail(function(error) {
+                errorMessage = JSON.parse(error.responseText);
+                console.log(errorMessage.error);
+                return null;
+            });
+    }
+    </script>
+</body>
+
+</html>
