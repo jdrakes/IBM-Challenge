@@ -17,6 +17,7 @@
         var defer = $.Deferred();
         var apiKey = 'a5e95177da353f58113fd60296e1d250';
         var userId = '24662369@N07';
+        var ids = getPhotoIds(defer);
 
         defer.then(function(ids) {
             if (ids != null) {
@@ -27,6 +28,20 @@
         });
     });
 
+    function getPhotoIds(defer) {
+        $.get('/photos/ids')
+            .done(function(ids) {
+                if (defer !== null && defer !== undefined)
+                    defer.resolve(ids);
+                else
+                    return ids;
+            })
+            .fail(function(error) {
+                errorMessage = JSON.parse(error.responseText);
+                console.log(errorMessage.error);
+                return null;
+            });
+    }
 
     function getPhotoUrl(photoId, defer) {
         $.get('/photos/photo/' + photoId + '/url')
