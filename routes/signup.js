@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var _und = require('underscore');
 var User = require('./userSchema');
-
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 var path = require('path');
 
 /* GET signup page. */
@@ -10,7 +11,7 @@ router.get('/', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../public/signup.html'));
 });
 
-/* GET users listing. */
+/* Proccess signup information. */
 router.post('/signup_action', function(req, res) {
     var out;
     delete req.body.re_password;
@@ -56,7 +57,7 @@ router.post('/signup_action', function(req, res) {
         }
 
         User.find({
-                "display": username
+                "email": username
             }, {
                 "_id": 0,
                 "display": 1
@@ -83,13 +84,10 @@ router.post('/signup_action', function(req, res) {
     checkEmail(email, function(err) {
         checkUsername(err, function(err) {
             if (err === null) {
-                addUser(req.body, function(){
+                addUser(req.body, function() {
                     console.log('Made it');
                 });
-                req.session.userid = id;
-                console.log(req.session);
-                // res.redirect('/users/user/'+id);
-                res.send({ error: "", redirect: '/users/user/'+id });
+                res.send({ error: "", redirect: '/users/user/'});
                 return;
             } else {
                 if (err.error !== null || err.error !== undefined) {
@@ -114,12 +112,14 @@ function addUser(userinfo, done) {
     });
 
     newUser.createName(function(err, name) {
+        if (err) console.log(err);
         console.log(name);
     });
 
     newUser.save(function(err) {
-        if (err) throw err;
+        if (err) console.log(err);
         console.log('User saved successfully!.');
+        // mongoose.connection.close();
         done();
     });
 }

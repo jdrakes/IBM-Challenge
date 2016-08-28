@@ -2,8 +2,14 @@ var express = require('express');
 var router = express.Router();
 var _und = require('underscore');
 var User = require('./userSchema');
+var path = require('path');
 
-/* GET users listing. */
+/* GET login page. */
+router.get('/', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/login.html'));
+});
+
+/* Process login information. */
 router.post('/login_action', function(req, res) {
     console.log(req.body);
     username = req.body.username;
