@@ -46,6 +46,7 @@
     function getPhotoUrl(photoId, defer) {
         $.get('/photos/photo/' + photoId + '/url')
             .done(function(data) {
+                console.log(photoId);
                 console.log(data);
                 $('#photoHolder').append('<img src="' + data + '">');
                 return data;

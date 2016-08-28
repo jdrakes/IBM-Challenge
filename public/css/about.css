@@ -1,0 +1,25 @@
+#content p {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    color: #0089ff;
+    font-size: 20px;
+    margin: auto;
+}
+
+.navbar, .jumbotron {
+	margin-bottom: 0;
+}
+
+.jumbotron h1 {
+	text-align: center;	
+}
+
+#content-holder {
+    margin-top: 0;
+}
+
+#content {
+	margin-top: 0;
+	padding: 0;
+}

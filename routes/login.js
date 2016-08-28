@@ -26,28 +26,29 @@ router.post('/login_action', function(req, res) {
     User.findOne({
         "email": username
     }, function(err, user) {
+        console.log("user is" + user);
         if (err) {
             console.log("err");
-            // return done(err);
-        }
-        console.log("user is" + user);
-        if (!user) {
+            res.status(400).send({ error: err });
+        } else if (!user) {
             console.log("!user");
-            // return done(null, false);
-        }
-        if (user === undefined || user === null || user.length === 0) {
-            // return done(null, false);
-        }
-        var id = user._id;
-        var displayname = user.display;
-        if (user.password != password || user.email != username) {
+            res.status(400).send({ error: 'Username not found. Please try again.' });
+            return;
+        } else if (user === undefined || user === null || user.length === 0) {
+            res.status(400).send({ error: 'Username not found. Please try again.' });
+            return;
+        } else if (user.password != password || user.email != username) {
             console.log("wrong password, got " + password + ", expected " + user.password);
-            // return done(null, false);
+           res.status(400).send({ error: 'Password was incorrect. Please try again.' });
+            return;
+        } else {
+            var id = user._id;
+            var displayname = user.display;
+            console.log("success?");
+            req.session.userid = id;
+            req.session.displayname = displayname;
+            res.send({ error: "", redirect: '/users/user/' + displayname });
         }
-        console.log("success?");
-        req.session.userid = id;
-        req.session.displayname = displayname;
-        res.send({ error: "", redirect: '/users/user/' + displayname });
     });
 
 });

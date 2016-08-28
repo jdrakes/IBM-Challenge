@@ -83,9 +83,8 @@ app.use('/js', express.static(path.join(__dirname, 'public/js')));
 // }));
 app.use(cookieSession({
     secret: 'keyswagger',
-    cookie: { maxAge: 3600000 },
-    resave: false,
-    saveUninitialized: true
+    maxAge: 3600000,
+    cookie: { maxAge: 3600000 }
 }));
 
 app.use('/', routes);
