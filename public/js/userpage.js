@@ -4,6 +4,9 @@ $(document).ready(function() {
 	$('.header').html('Welcome '+user+"!")
 });
 
+/*
+	Function determines which user is signed in to app.
+ */
 function checkUrl(){
 	var path = window.location.pathname;
 	console.log(path);

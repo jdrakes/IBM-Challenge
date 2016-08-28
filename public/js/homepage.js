@@ -5,6 +5,9 @@ $(document).ready(function() {
 	}
 });
 
+/*
+	Function to place images on home page.
+ */
 function placeImage(index, photoId){
 	 var defer = $.Deferred();
 	var url = getPhotoUrl(photoId, defer);

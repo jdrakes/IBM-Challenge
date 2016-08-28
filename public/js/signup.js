@@ -1,3 +1,6 @@
+/*
+    Function to validate inputs before sending to server.
+ */
 $("#signup-form").submit(function(evt) {
     evt.preventDefault();
     var defer = $.Deferred();
@@ -41,6 +44,9 @@ $("#signup-form").submit(function(evt) {
     }
 });
 
+/*
+    Function to send sign up information to server and return results.
+ */
 function signUp(data, defer) {
     data = JSON.stringify(data);
     $.ajax({
