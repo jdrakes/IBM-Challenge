@@ -74,6 +74,7 @@ app.use(function(req, res, next) {
 app.use('/bootstrap', express.static(path.join(__dirname, 'public/bootstrap')));
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/img', express.static(path.join(__dirname, 'public/images')));
 
 // app.use(session({
 //     secret: 'keyswagger',

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var user = checkUrl();
-	$('#username').html('Hello '+user);
+	$('#username').html('Hello, '+user);
 	$('.header').html('Welcome '+user+"!")
 });
 
