@@ -6,5 +6,17 @@ var path = require('path');
 router.get('/', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
+/* GET about us page. */
+router.get('/about', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/about.html'));
+});
+/* GET contact us page. */
+router.get('/contact', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/contact.html'));
+});
+/* GET activities page. */
+router.get('/activities', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/activities.html'));
+});
 
 module.exports = router;

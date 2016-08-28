@@ -1,10 +1,10 @@
-$("#signup-form").submit(function(evt) {
+$("#login-form").submit(function(evt) {
     evt.preventDefault();
     var defer = $.Deferred();
     var inputArr = [];
     var inputObj = {};
     var msg = "";
-    $("#signup-form input").each(function() {
+    $("#login-form input").each(function() {
         var input = $(this);
         var inputVal = $(this).val();
 
@@ -21,30 +21,23 @@ $("#signup-form").submit(function(evt) {
     if (msg !== "") {
         alert(msg);
     }
-    else if( !/[\w.+-_]+@[\w.-]+.[\w]+/.test(inputObj.email))
+    else if( !/[\w.+-_]+@[\w.-]+.[\w]+/.test(inputObj.username))
         alert("Invalid email address was input.");
-    else if(! /^[a-z0-9]+$/i.test(inputObj.display))
-        alert("Invalid username was input.");
-    else if(inputObj.password !== inputObj.re_password){
-        alert("Passwords do not match please re-enter them.");
-        $("#password").val("");
-        $("#re_password").val("");
-    }
     else{
-        signUp(inputObj, defer);
+        login(inputObj, defer);
         defer.then(function(result){
             if(result !== "success")
                 alert(result);
             else
-                alert("Your profile has been created please sign in.");
+                alert("You have succesfully logged in!");
         });
     }
 });
 
-function signUp(data, defer) {
+function login(data, defer) {
     data = JSON.stringify(data);
     $.ajax({
-        url: '/signup/signup_action',
+        url: '/login/login_action',
         method: "POST",
         data: data,
         contentType: "application/json",

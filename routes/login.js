@@ -21,7 +21,7 @@ router.post('/login_action', function(req, res) {
     console.log(inputValid);
     if (inputValid.error !== "") {
         console.log(inputValid);
-        return done(null, false);
+        return;
     }
     User.findOne({
         "email": username
@@ -39,14 +39,15 @@ router.post('/login_action', function(req, res) {
             // return done(null, false);
         }
         var id = user._id;
+        var displayname = user.display;
         if (user.password != password || user.email != username) {
             console.log("wrong password, got " + password + ", expected " + user.password);
             // return done(null, false);
         }
         console.log("success?");
         req.session.userid = id;
-        res.redirect('/users/user/' + id);
-
+        req.session.displayname = displayname;
+        res.send({ error: "", redirect: '/users/user/' + displayname });
     });
 
 });

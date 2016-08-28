@@ -23,77 +23,19 @@ router.post('/signup_action', function(req, res) {
         res.send(validInputs);
     }
 
-    function checkEmail(email, callback) {
-        User.find({
-                "email": email
-            }, {
-                "_id": 0,
-                "email": 1
-            })
-            .exec(function(err, docs) {
-                console.log(docs.length);
-                if (typeof callback === "function") {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        if (docs.length === 0) {
-                            uniqueEmail = 'unique';
-                            callback(null);
-                        } else {
-                            callback({
-                                error: "Email has already been used to create an account."
-                            });
-                            return;
-                        }
-                    }
-                }
-            });
-    }
-
-    function checkUsername(err, callback) {
-        if (err !== null) {
-            callback(err);
-            return;
-        }
-
-        User.find({
-                "email": username
-            }, {
-                "_id": 0,
-                "display": 1
-            })
-            .exec(function(err, docs) {
-                console.log(docs);
-                if (typeof callback === "function") {
-                    if (err) {
-                        console.log(err);
-                        callback(err);
-                        return;
-                    } else {
-                        if (docs.length === 0) {
-                            callback(null, true);
-                            return;
-                        } else
-                            callback({ error: "Username has already been used to create an account." });
-                        return;
-                    }
-                }
-            });
-    }
-
     checkEmail(email, function(err) {
-        checkUsername(err, function(err) {
+        checkUsername(username, err, function(err) {
             if (err === null) {
                 addUser(req.body, function() {
                     console.log('Made it');
                 });
-                res.send({ error: "", redirect: '/users/user/'});
+                res.send({ error: "", redirect: '/login' });
                 return;
             } else {
                 if (err.error !== null || err.error !== undefined) {
                     console.log(err);
                     res.statusMessage = err.error;
-                    res.status(400).send({ error: 'Photo ID does not exist in photo database.' });
+                    res.status(400).send(err);
                 }
                 return;
             }
@@ -101,29 +43,9 @@ router.post('/signup_action', function(req, res) {
     });
 });
 
-function addUser(userinfo, done) {
-    var newUser = new User({
-        first_name: userinfo.first_name,
-        last_name: userinfo.last_name,
-        display: userinfo.display,
-        email: userinfo.email,
-        password: userinfo.password,
-        admin: false
-    });
-
-    newUser.createName(function(err, name) {
-        if (err) console.log(err);
-        console.log(name);
-    });
-
-    newUser.save(function(err) {
-        if (err) console.log(err);
-        console.log('User saved successfully!.');
-        // mongoose.connection.close();
-        done();
-    });
-}
-
+/*
+    Validate inputs are not malicious or incorrect;
+ */
 function checkInputs(inputsObj) {
     var expectedKeys = ["first_name", "last_name", "email", "display", "password"];
     var inputs = _und.values(inputsObj);
@@ -145,4 +67,94 @@ function checkInputs(inputsObj) {
     else
         return { error: "" };
 }
+
+/*
+    Check if signup email is unique;
+ */
+function checkEmail(email, callback) {
+    User.find({
+            "email": email
+        }, {
+            "_id": 0,
+            "email": 1
+        })
+        .exec(function(err, docs) {
+            console.log(docs.length);
+            if (typeof callback === "function") {
+                if (err) {
+                    callback(err);
+                } else {
+                    if (docs.length === 0) {
+                        uniqueEmail = 'unique';
+                        callback(null);
+                    } else {
+                        callback({
+                            error: "Email has already been used to create an account."
+                        });
+                        return;
+                    }
+                }
+            }
+        });
+}
+
+/*
+    Check if signup username is unique;
+ */
+function checkUsername(username, err, callback) {
+    if (err !== null) {
+        callback(err);
+        return;
+    }
+
+    User.find({
+            "display": username
+        }, {
+            "_id": 0,
+            "display": 1
+        })
+        .exec(function(err, docs) {
+            console.log(docs);
+            if (typeof callback === "function") {
+                if (err) {
+                    console.log(err);
+                    callback(err);
+                    return;
+                } else {
+                    if (docs.length === 0) {
+                        callback(null, true);
+                        return;
+                    } else
+                        callback({ error: "Username has already been used to create an account." });
+                    return;
+                }
+            }
+        });
+}
+
+/*
+    Add new user to mongo database;
+ */
+function addUser(userinfo, done) {
+    var newUser = new User({
+        first_name: userinfo.first_name,
+        last_name: userinfo.last_name,
+        display: userinfo.display,
+        email: userinfo.email,
+        password: userinfo.password,
+        admin: false
+    });
+
+    newUser.createName(function(err, name) {
+        if (err) console.log(err);
+        console.log(name);
+    });
+
+    newUser.save(function(err) {
+        if (err) console.log(err);
+        console.log('User saved successfully!.');
+        done();
+    });
+}
+
 module.exports = router;

@@ -4,15 +4,16 @@ var User = require('./userSchema');
 var path = require('path');
 
 /* GET users listing. */
-router.get('/user/:userid', authenticated, function(req, res, next) {
+router.get('/user/:displayname', authenticated, function(req, res, next) {
     console.log(req.session);
-    var id = req.params.userid;
-    console.log(id);
-    console.log(req.session.userid);
-    if (id !== req.session.userid){
+    var displayname = req.params.displayname;
+    console.log(displayname);
+    console.log(req.session.displayname);
+    if (displayname !== req.session.displayname){
         res.redirect('/');
         return;
     }
+    var id = req.session.userid;
     User.findById(id, function(err, user) {
         if (err) {
             console.log("err");
