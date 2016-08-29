@@ -19,10 +19,10 @@ router.get('/activities', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../public/activities.html'));
 });
 
-// /* GET activities page. */
-// router.get('/display', function(req, res, next) {
-//     res.sendFile(path.join(__dirname, '../public/displayAll.html'));
-// });
+/* GET activities page. */
+router.get('/display', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/displayAll.html'));
+});
 
 
 module.exports = router;

@@ -1,5 +1,7 @@
+var id = 28629479145;
 $(document).ready(function() {
     bindFilter('#filter', 'table');
+    placeImageBackground('body',id);
 });
 
 /*
@@ -15,4 +17,16 @@ function bindFilter(input, table) {
                 $(this).hide();
         });
     });
+}
+
+/*
+    Function to place image to background on activities page.
+ */
+function placeImageBackground(domId, photoId) {
+    var defer = $.Deferred();
+    var url = getPhotoUrl(photoId, defer);
+    defer.then(function(url) {
+        $(domId).css('background-image', 'url(' + url + ')');
+    });
+
 }

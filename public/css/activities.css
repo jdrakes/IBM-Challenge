@@ -1,3 +1,11 @@
+table tr {
+    background-color: white;
+}
+
+#content h2 {
+    color: white;
+}
+
 #content p {
     text-align: center;
     width: 100%;
