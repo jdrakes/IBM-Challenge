@@ -23,8 +23,6 @@ var url = 'mongodb://192.168.1.176:27017/spacex';
 var app = express();
 
 photodb.pullPhotos(apiKey, userId, function(err, db) {
-    // console.log(assert.equal(null, err));
-    // console.log(err, db);
     if (err)
         console.log(err);
     else
@@ -58,7 +56,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon-web-v3.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -76,12 +74,6 @@ app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/js', express.static(path.join(__dirname, 'public/js')));
 app.use('/img', express.static(path.join(__dirname, 'public/images')));
 
-// app.use(session({
-//     secret: 'keyswagger',
-//     cookie: { maxAge: 3600000 },
-//     resave: false,
-//     saveUninitialized: true
-// }));
 app.use(cookieSession({
     secret: 'keyswagger',
     maxAge: 3600000,
