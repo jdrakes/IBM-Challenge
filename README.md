@@ -26,6 +26,7 @@ Build a flickr web-app that fetches images from Nasa's account via the Flickr AP
 
 ### Functionality
  - On server start photo database is created using the Flickr API inside the Express JS server
+ - All photos in web app are from the Flickr API
  - Activities on the Activities page can be sorted via the filter input box
  - Via express routes photo information is accessible to the browser
  - On Login credentials are verified on the server and action is taken on result of success/failure
