@@ -1,23 +1,28 @@
 $(document).ready(function() {
-    if(window.location.pathname === '/login'){
+    if (window.location.pathname === '/login') {
         loginAction();
-    }
-    else
+    } else
         getLoggedIn();
 });
 
+/*
+    Function to determine if a seesion exists for current user.
+ */
 function getLoggedIn() {
     $.get('/users/loggedin')
         .done(function(result) {
-            $('#myNavbar').append('<ul class="nav navbar-nav navbar-right"><li class="active"><a href="/users/user/'+result.username+'" id="username">'+result.username+'</a></li></ul>');
+            $('#myNavbar').append('<ul class="nav navbar-nav navbar-right"><li class="active"><a href="/users/user/' + result.username + '" id="username">' + result.username + '</a></li></ul>');
             // $('#username').html('Hello '+result.username);
         })
-        .fail(function(result){
+        .fail(function(result) {
             $('#myNavbar').append('<form id="login-form" action="/login/login_action" method="post" class="navbar-form navbar-right"><div class="form-group"><input id="username" name="username" type="text" placeholder="Email" class="input-round form-control"></div><div class="form-group"><input type="password" id="password" name="password" placeholder="Password" class="input-round form-control"></div><button type="submit" class="btn-spacex-blue">Sign in</button></form>');
             loginAction();
         });
 }
 
+/*
+    Function to validate inputs before sending to server.
+ */
 function loginAction() {
     $("#login-form").submit(function(evt) {
         evt.preventDefault();
@@ -55,6 +60,9 @@ function loginAction() {
     });
 }
 
+/*
+    Function to send login information to server and return results.
+ */
 function login(data, defer) {
     data = JSON.stringify(data);
     $.ajax({
@@ -80,5 +88,3 @@ function login(data, defer) {
                 defer.resolve(result);
         });
 }
-
-

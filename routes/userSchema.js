@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
+// Define user schema
 var userSchema = new Schema({
     first_name: String,
     last_name: String,
@@ -16,17 +16,17 @@ var userSchema = new Schema({
 
 // on every save, add the date
 userSchema.pre('save', function(next) {
-  // get the current date
-  var currentDate = new Date();
-  
-  // change the updated_at field to current date
-  this.updated_at = currentDate;
+    // get the current date
+    var currentDate = new Date();
 
-  // if created_at doesn't exist, add to that field
-  if (!this.created_at)
-    this.created_at = currentDate;
+    // change the updated_at field to current date
+    this.updated_at = currentDate;
 
-  next();
+    // if created_at doesn't exist, add to that field
+    if (!this.created_at)
+        this.created_at = currentDate;
+
+    next();
 });
 
 userSchema.methods.createName = function() {
@@ -34,4 +34,4 @@ userSchema.methods.createName = function() {
     return this.name;
 }
 
-module.exports =  mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

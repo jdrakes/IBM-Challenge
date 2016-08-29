@@ -4,7 +4,7 @@
     max-width: 460px;
     color: #0089ff;
     font-size: 20px;
-    margin:	auto;
+    margin: auto;
     display: block;
 }
 
@@ -17,8 +17,9 @@
 }
 
 .jumbotron h1 {
-    text-align: center; 
+    text-align: center;
 }
+
 #content-holder {
     margin-top: 0;
 }
@@ -28,19 +29,19 @@
     padding: 0;
 }
 
-#content div{
-	margin-top: 50px;
+#content div {
+    margin-top: 50px;
 }
 
 #content li {
-	text-align: left;
+    text-align: left;
 }
 
 .contacts {
-	margin:auto;
-	width: 300px;
+    margin: auto;
+    width: 300px;
 }
 
 .glyphicon {
-	padding-right: 10px;
+    padding-right: 10px;
 }

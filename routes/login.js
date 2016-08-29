@@ -15,7 +15,6 @@ router.post('/login_action', function(req, res) {
     username = req.body.username;
     password = req.body.password;
     console.log(username, password);
-    // process.nextTick(function() {
     console.log("I made it");
     var inputValid = checkInputs(username);
     console.log(inputValid);
@@ -39,7 +38,7 @@ router.post('/login_action', function(req, res) {
             return;
         } else if (user.password != password || user.email != username) {
             console.log("wrong password, got " + password + ", expected " + user.password);
-           res.status(400).send({ error: 'Password was incorrect. Please try again.' });
+            res.status(400).send({ error: 'Password was incorrect. Please try again.' });
             return;
         } else {
             var id = user._id;

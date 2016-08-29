@@ -132,7 +132,6 @@ function Map() {
     };
     this.has = function(key) {
         return this.data.hasOwnProperty(key);
-        // return _.has(this.data, key);
     };
     this.toString = function() {
         var temp = "";

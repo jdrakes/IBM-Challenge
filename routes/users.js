@@ -30,7 +30,7 @@ router.get('/user/:displayname', authenticated, function(req, res, next) {
     }
 
     var id = req.session.userid;
-    User.findOne({"display": displayname}, function(err, user) {
+    User.findOne({ "display": displayname }, function(err, user) {
         if (err) {
             console.log("err");
             return;
@@ -52,7 +52,9 @@ router.get('/user/:displayname', authenticated, function(req, res, next) {
 
 });
 
-
+/*
+    Verify is user has been authenticated in session.
+ */
 function authenticated(req, res, next) {
     console.log(req.session);
     if (req.session.userid !== undefined && req.session.userid !== null) {
