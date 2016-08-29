@@ -15,6 +15,13 @@ router.get('/loggedin', function(req, res, next) {
     }
 });
 
+/*Get user log out*/
+router.get('/logout', function(req, res) {
+    console.log('logging out');
+    req.session = null;
+    res.redirect('/');
+});
+
 /* GET users listing. */
 router.get('/user/:displayname', authenticated, function(req, res, next) {
     console.log(req.session);
